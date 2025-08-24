@@ -41,3 +41,5 @@ with zipfile.ZipFile(SRC_DOCX) as z:
             shutil.move(f'{DIST_DIR}/{name}', f'{DIST_DIR}/image{q_num}.png')
 
 print('✅ 已生成', len(questions), '道题')
+print('全文长度:', len(text))
+print('匹配到题数:', len(questions))
