@@ -36,10 +36,14 @@ with zipfile.ZipFile(SRC_DOCX) as z:
     for name in z.namelist():
         if name.startswith('word/media/'):
             img_name = os.path.basename(name)
-            q_num = int(re.search(r'image(\d+)\.', img_name).group(1))
+            m = re.search(r'image(\d+)', img_name)
+            if not m:
+                continue     # 跳过不符合命名规则的文件
+            q_num = int(m.group(1))
             z.extract(name, DIST_DIR)
             shutil.move(f'{DIST_DIR}/{name}', f'{DIST_DIR}/image{q_num}.png')
 
 print('✅ 已生成', len(questions), '道题')
 print('全文长度:', len(text))
 print('匹配到题数:', len(questions))
+
